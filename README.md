@@ -13,14 +13,6 @@ A mod for Baldi's Basics Plus that enhances the game's dynamic, making the gamep
 2. Download the latest release of Enhanced Dynamics
 3. Place the `EnhancedDynamics.dll` file in your `BepInEx/plugins` folder
 
-## Configuration
-
-1. Launch Baldi's Basics Plus
-2. Access the mod settings through the options menu
-3. Configure the following settings:
-   - **FOV Transitions:** Toggle dynamic FOV changes while running
-   - **Base FOV:** Adjust the default field of view (bars)
-
 ## Configuration Options
 
 ### FOV Transitions
