@@ -6,6 +6,7 @@ A mod for Baldi's Basics Plus that enhances the game's dynamic, making the gamep
 
 - **Customizable Base FOV:** Adjust the base field of view to your preference (default: 60)
 - **Dynamic FOV Transitions:** Enable smooth FOV transitions while running to create a more intense gameplay experience
+- **Camera Bobbing:** just like in minecraft lol
 
 ## Installation
 
@@ -20,6 +21,9 @@ When enabled, this feature increases your FOV on sprint, creating a more dynamic
 
 ### Base FOV
 There are 4 FOV levels (30(0), 60(1), 90(2) and 120(3))
+
+### Camera Bobbing and intensity
+You can toggle and configure it from 0.25 by default to 1 max
 
 ## Reqirements
 
