@@ -8,28 +8,38 @@ namespace EnhancedDynamics
     {
         public bool fovToggle = false;
         public int fovValue = 1;
+        public bool cameraBobbingToggle = true;
+        public int cameraBobbingIntensity = 1;
     }
 
     public class CategorySettings : CustomOptionsCategory
     {
         MenuToggle FOVToggle;
         AdjustmentBars FOVValue;
+        MenuToggle CameraBobbing;
+        AdjustmentBars CameraBobbingIntensity;
 
         public override void Build()
         {
             FOVToggle = CreateNewToggle("fovToggle", "FOV Transitions", "Enables FOV transitions when running, making the game feels more intensive", 1);
-            FOVValue = CreateNewBar("fovValue", "Base FOV", "Base field of view value (default: 60)", 2, 3, Color.green);
+            FOVValue = CreateNewBar("fovValue", "Base FOV", "Base field of view value (default: 60)", 2, 3, Color.black);
 
+            CameraBobbing = CreateNewToggle("cameraBobbingToggle", "Camera Bobbing", "Enables camera bobbing when walking/running", 3);
+            CameraBobbingIntensity = CreateNewBar("cameraBobbingIntensity", "Bobbing Intensity", "Adjusts the intensity of the camera bobbing effect", 4, 3, Color.black);
             CreateApplyButton(() => SendData());
 
             FOVToggle.Set(DefaultCategorySettings.Instance.fovToggle);
             FOVValue.Adjust(DefaultCategorySettings.Instance.fovValue);
+            CameraBobbing.Set(DefaultCategorySettings.Instance.cameraBobbingToggle);
+            CameraBobbingIntensity.Adjust(DefaultCategorySettings.Instance.cameraBobbingIntensity);
         }
 
         public void SendData()
         {
             DefaultCategorySettings.Instance.fovToggle = FOVToggle.Value;
             DefaultCategorySettings.Instance.fovValue = FOVValue.GetRaw();
+            DefaultCategorySettings.Instance.cameraBobbingToggle = CameraBobbing.Value;
+            DefaultCategorySettings.Instance.cameraBobbingIntensity = CameraBobbingIntensity.GetRaw();
         }
 
         public AdjustmentBars CreateNewBar(string id, string name,string tooltipKey,int order, int length, Color textColor) {
