@@ -13,7 +13,7 @@ A mod for Baldi's Basics Plus that enhances the game's dynamic, making the gamep
 2. Download the latest release of Enhanced Dynamics
 3. Place the `EnhancedDynamics.dll` file in your `BepInEx/plugins` folder
 
-## Usage
+## Configuration
 
 1. Launch Baldi's Basics Plus
 2. Access the mod settings through the options menu
