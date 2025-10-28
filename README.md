@@ -42,3 +42,7 @@ If you encounter any issues or have suggestions, please open an issue on the Git
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Credits
+
+@ThePartynoob - Helping out with some code
