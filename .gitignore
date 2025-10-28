@@ -19,3 +19,7 @@ winhttp.dll
 
 # Dependency packages (if managed separately)
 packages/
+
+Managed/
+Managed.zip
+MTM101BaldAPI.xml
