@@ -61,19 +61,16 @@
       <HintPath>../Managed/MonoMod.Utils.dll</HintPath>
     </Reference>
     <Reference Include="MTM101BaldAPI">
-      <HintPath>../Managed/MTM101BaldAPI.dll</HintPath>
+      <HintPath>../Managed/BBP Dependencies/MTM101BaldAPI.dll</HintPath>
     </Reference>
     <Reference Include="NavMeshComponents">
       <HintPath>../Managed/NavMeshComponents.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>../Managed/Newtonsoft.Json.dll</HintPath>
+      <HintPath>../Managed/BBP Dependencies/Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Rewired_Core">
       <HintPath>../Managed/Rewired_Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Rewired_Linux">
-      <HintPath>../Managed/Rewired_Linux.dll</HintPath>
     </Reference>
     <Reference Include="System.Configuration">
       <HintPath>../Managed/System.Configuration.dll</HintPath>
