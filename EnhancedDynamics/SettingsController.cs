@@ -8,28 +8,34 @@ namespace EnhancedDynamics
     {
         public bool fovToggle = false;
         public int fovValue = 1;
+        public bool cameraBobbingToggle = true;
     }
 
     public class CategorySettings : CustomOptionsCategory
     {
         MenuToggle FOVToggle;
         AdjustmentBars FOVValue;
+        MenuToggle CameraBobbing;
 
         public override void Build()
         {
             FOVToggle = CreateNewToggle("fovToggle", "FOV Transitions", "Enables FOV transitions when running, making the game feels more intensive", 1);
-            FOVValue = CreateNewBar("fovValue", "Base FOV", "Base field of view value (default: 60)", 2, 3, Color.green);
+            FOVValue = CreateNewBar("fovValue", "Base FOV", "Base field of view value (default: 60)", 2, 3, Color.black);
+
+            CameraBobbing = CreateNewToggle("cameraBobbingToggle", "Camera Bobbing", "Enables camera bobbing when walking/running", 3);
 
             CreateApplyButton(() => SendData());
 
             FOVToggle.Set(DefaultCategorySettings.Instance.fovToggle);
             FOVValue.Adjust(DefaultCategorySettings.Instance.fovValue);
+            CameraBobbing.Set(DefaultCategorySettings.Instance.cameraBobbingToggle);
         }
 
         public void SendData()
         {
             DefaultCategorySettings.Instance.fovToggle = FOVToggle.Value;
             DefaultCategorySettings.Instance.fovValue = FOVValue.GetRaw();
+            DefaultCategorySettings.Instance.cameraBobbingToggle = CameraBobbing.Value;
         }
 
         public AdjustmentBars CreateNewBar(string id, string name,string tooltipKey,int order, int length, Color textColor) {

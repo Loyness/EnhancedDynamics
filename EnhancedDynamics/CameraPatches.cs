@@ -6,7 +6,7 @@ using MTM101BaldAPI.OptionsAPI;
 namespace EnhancedDynamics
 {
     [HarmonyPatch]
-    public static class FOVControllerPatches
+    public static class CameraPatches
     {
         private static float baseFOV => Singleton<DefaultCategorySettings>.Instance.fovValue;
         private static float convertedFOV;
@@ -30,6 +30,7 @@ namespace EnhancedDynamics
         {
             convertedFOV = (baseFOV + 1) * 30f;
 
+            // FOV Transition Logic
             if (toggleFOV)
             {
                 if (Singleton<InputManager>.Instance.GetDigitalInput("Run", false))

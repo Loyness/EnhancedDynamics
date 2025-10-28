@@ -27,7 +27,7 @@ namespace EnhancedDynamics
         void AddCategory(OptionsMenu __instance, CustomOptionsHandler handler)
         {
             if (Singleton<CoreGameManager>.Instance != null) return;
-            handler.AddCategory<CategorySettings>("Enhanced Dynamics");
+            handler.AddCategory<CategorySettings>("Enhanced\nDynamics");
         }
     }
 }
