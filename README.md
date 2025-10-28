@@ -16,7 +16,7 @@ A mod for Baldi's Basics Plus that enhances the game's dynamic, making the gamep
 ## Configuration Options
 
 ### FOV Transitions
-When enabled, this feature increases your FOV, creating a more dynamic and intense feel to the movement.
+When enabled, this feature increases your FOV on sprint, creating a more dynamic and intense feel to the movement.
 
 ### Base FOV
 There are 4 FOV levels (30(0), 60(1), 90(2) and 120(3))
