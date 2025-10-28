@@ -1,0 +1,21 @@
+# Build artifacts
+bin/
+obj/
+*.cache
+*.Up2Date
+EnhancedDynamics.AssemblyInfo.cs
+
+# BepInEx core files (if not part of your distribution)
+BepInEx/
+doorstop_config.ini
+winhttp.dll
+
+# Configuration files
+*.cfg
+
+# Visual Studio files
+*.user
+*.suo
+
+# Dependency packages (if managed separately)
+packages/
