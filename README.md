@@ -29,17 +29,11 @@ When enabled, this feature increases your FOV, creating a more dynamic and inten
 ### Base FOV
 There are 4 FOV levels (30(0), 60(1), 90(2) and 120(3))
 
-## Compatibility
+## Reqirements
 
-- Requires Baldi's Basics Plus
-- Requires BepInEx
-- Requires MTM101BaldAPI
-
-## Technical Details
-
-- Version: 27.10
-- Author: imloyness
-- License: MIT
+- Baldi's Basics Plus
+- BepInEx
+- MTM101BaldAPI
 
 ## Bug Reports and Feedback
 
