@@ -27,10 +27,7 @@ A mod for Baldi's Basics Plus that enhances the game's dynamic, making the gamep
 When enabled, this feature increases your FOV, creating a more dynamic and intense feel to the movement.
 
 ### Base FOV
-Adjust this value to set your preferred base field of view. The actual FOV value is calculated as:
-```
-Final FOV = BaseFOV level (0 = 30) * 30
-```
+There are 4 FOV levels (30(0), 60(1), 90(2) and 120(3))
 
 ## Compatibility
 
