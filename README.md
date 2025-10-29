@@ -1,4 +1,4 @@
-[https://raw.githubusercontent.com/Loyness/EnhancedDynamics/refs/heads/main/EnhancedDynamicsThumb.png]
+https://raw.githubusercontent.com/Loyness/EnhancedDynamics/refs/heads/main/EnhancedDynamicsThumb.png
 
 # Enhanced Dynamics
 
