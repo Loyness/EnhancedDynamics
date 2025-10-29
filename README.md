@@ -1,3 +1,5 @@
+[https://raw.githubusercontent.com/Loyness/EnhancedDynamics/refs/heads/main/EnhancedDynamicsThumb.png]
+
 # Enhanced Dynamics
 
 A mod for Baldi's Basics Plus that enhances the game's dynamic, making the gameplay experience more immersive.
