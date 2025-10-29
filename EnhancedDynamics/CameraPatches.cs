@@ -2,6 +2,7 @@ using UnityEngine;
 using HarmonyLib;
 using EnhancedDynamics;
 using MTM101BaldAPI.OptionsAPI;
+using Rewired;
 
 namespace EnhancedDynamics
 {
@@ -29,12 +30,17 @@ namespace EnhancedDynamics
         private static bool toggleFOV => Singleton<DefaultCategorySettings>.Instance.fovToggle;
         private static bool toggleCameraBobbing => Singleton<DefaultCategorySettings>.Instance.cameraBobbingToggle;
 
-        private static Vector3 CalculateBobOffset()
+        private static Vector3 CalculateBobOffset(float cameraYRotation)
         {
             float horizontalBob = Mathf.Sin(timer * bobbingSpeed) * convertedBobAm;
-            float verticalBob = Mathf.Cos(timer * bobbingSpeed * 2f) * convertedBobAm;
-            Vector3 result = new Vector3(horizontalBob, verticalBob * 0.5f, 0f);
-            return result;
+            float verticalBob = Mathf.Cos(timer * bobbingSpeed * 2f) * convertedBobAm * 0.5f;
+            
+            float angleRad = cameraYRotation * Mathf.Deg2Rad;
+            
+            float rotatedX = horizontalBob * Mathf.Cos(angleRad);
+            float rotatedZ = horizontalBob * Mathf.Sin(angleRad);
+            
+            return new Vector3(rotatedX, verticalBob, rotatedZ);
         }
 
         [HarmonyPatch(typeof(GameCamera), "Awake")]
@@ -72,14 +78,16 @@ namespace EnhancedDynamics
             // Camera Bobbing Logic
             if (toggleCameraBobbing)
             {
-                bool isMoving = 
-                    Singleton<InputManager>.Instance.GetDigitalInput("MovementX", false) ||
-                    Singleton<InputManager>.Instance.GetDigitalInput("MovementY", false);
+                // ReInput cooking
+                float moveX = ReInput.players.GetPlayer(0).GetAxis("MovementX");
+                float moveY = ReInput.players.GetPlayer(0).GetAxis("MovementY");
+                bool isMoving = Mathf.Abs(moveX) > 0.1f || Mathf.Abs(moveY) > 0.1f;
 
                 if (isMoving)
                 {
                     timer += Time.deltaTime * (isRunning ? sprintBobbingMultiplier : 1f);
-                    Vector3 targetBobOffset = CalculateBobOffset();
+                    float cameraYRotation = __instance.transform.eulerAngles.y;
+                    Vector3 targetBobOffset = CalculateBobOffset(cameraYRotation);
                     lastBobOffset = Vector3.Lerp(lastBobOffset, targetBobOffset, Time.deltaTime * 10f);
                     __instance.transform.position += lastBobOffset;
                 }
@@ -99,6 +107,7 @@ namespace EnhancedDynamics
 
             //debug
             //BasePlugin.logsblablabla.LogInfo("Enhanced Dynamics | Sprint Hold: " + Singleton<InputManager>.Instance.GetDigitalInput("Run", false).ToString());
+            
             //BasePlugin.logsblablabla.LogInfo("Enhanced Dynamics | FOV Toggle: " + toggleFOV.ToString());
             //BasePlugin.logsblablabla.LogInfo("Enhanced Dynamics | FOV: " + UpdateFOV.ToString());
 
