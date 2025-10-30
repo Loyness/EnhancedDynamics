@@ -7,7 +7,7 @@ using MTM101BaldAPI.OptionsAPI;
 
 namespace EnhancedDynamics
 {
-    [BepInPlugin("imloyness.enhanced.dynamics", "EnhancedDynamics", "28.10")]
+    [BepInPlugin("imloyness.enhanced.dynamics", "EnhancedDynamics", "30.10")]
     public class BasePlugin : BaseUnityPlugin
     {
         public static BepInEx.Logging.ManualLogSource logsblablabla = BepInEx.Logging.Logger.CreateLogSource("EnhancedDynamics");
@@ -21,7 +21,7 @@ namespace EnhancedDynamics
 
             CustomOptionsCore.OnMenuInitialize += AddCategory;
 
-            logsblablabla.LogInfo("Enhanced Dynamics | v28.10 | by imloyness | hi");
+            logsblablabla.LogInfo("Enhanced Dynamics | v30.10 | by imloyness | hi");
         }
         
         void AddCategory(OptionsMenu __instance, CustomOptionsHandler handler)

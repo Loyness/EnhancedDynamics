@@ -59,20 +59,17 @@ namespace EnhancedDynamics
 
             // FOV Transition Logic
             bool isRunning = Singleton<InputManager>.Instance.GetDigitalInput("Run", false);
-            if (toggleFOV && isRunning)
-            {
-                targetFOV = convertedFOV * 1.2f;
-            }
-            else
-            {
-                targetFOV = convertedFOV;
-            }
+            float newTargetFOV = toggleFOV && isRunning ? convertedFOV * 1.2f : convertedFOV;
 
-            if (transitionProgress == 1f)
+            if (transitionProgress >= 1f)
             {
-                startFOV = __instance.camCom.fieldOfView;
-                transitionProgress = 0f;
-                targetFOV = convertedFOV;
+                // Check if we need to start a new transition
+                if (Mathf.Abs(targetFOV - newTargetFOV) > 0.01f)
+                {
+                    startFOV = __instance.camCom.fieldOfView;
+                    targetFOV = newTargetFOV;
+                    transitionProgress = 0f;
+                }
             }
 
             // Camera Bobbing Logic
@@ -91,17 +88,18 @@ namespace EnhancedDynamics
                     lastBobOffset = Vector3.Lerp(lastBobOffset, targetBobOffset, Time.deltaTime * 10f);
                     __instance.transform.position += lastBobOffset;
                 }
-                else
+                else if (lastBobOffset.magnitude > 0.001f)
                 {
                     lastBobOffset = Vector3.Lerp(lastBobOffset, Vector3.zero, Time.deltaTime * 5f);
                     __instance.transform.position += lastBobOffset;
                 }
             }
-
+            
+            //more fov logic
             if (transitionProgress < 1f)
             {
                 transitionProgress = Mathf.Min(transitionProgress + lerpSpeed * Time.deltaTime, 1f);
-                float smoothProgress = (1f - Mathf.Cos(transitionProgress * Mathf.PI)) * 0.5f;
+                float smoothProgress = Mathf.Sin(transitionProgress * Mathf.PI * 0.5f);
                 UpdateFOV = Mathf.Lerp(startFOV, targetFOV, smoothProgress);
             }
 

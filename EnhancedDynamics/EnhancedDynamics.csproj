@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <Target Name="PostBuildCopy" AfterTargets="Build">
-    <Copy SourceFiles="$(TargetPath)" DestinationFolder="C:\Program Files (x86)\Steam\steamapps\common\Baldi's Basics Plus\BepInEx\plugins" />
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="C:\Program Files (x86)\Steam\steamapps\common\Baldi's Basics Plus\BepInEx\plugins\Enhanced Dynamics\BepInEx\plugins" />
   </Target>
 
   <ItemGroup>
