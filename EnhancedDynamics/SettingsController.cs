@@ -8,8 +8,8 @@ namespace EnhancedDynamics
     {
         public bool fovToggle = false;
         public int fovValue = 1;
-        public bool cameraBobbingToggle = true;
-        public int cameraBobbingIntensity = 1;
+        public bool cameraBobbingToggle = false;
+        public int cameraBobbingIntensity = 2;
     }
 
     public class CategorySettings : CustomOptionsCategory
