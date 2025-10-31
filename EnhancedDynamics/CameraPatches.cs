@@ -1,7 +1,7 @@
 using UnityEngine;
 using HarmonyLib;
 using EnhancedDynamics;
-using MTM101BaldAPI.OptionsAPI;
+//using MTM101BaldAPI.OptionsAPI;
 using Rewired;
 
 namespace EnhancedDynamics
@@ -10,7 +10,7 @@ namespace EnhancedDynamics
     public static class CameraPatches
     {
         // FOV parameters
-        private static float baseFOV => Singleton<DefaultCategorySettings>.Instance.fovValue;
+        private static float baseFOV => BasePlugin.FOVValue.Value;
         private static float convertedFOV;
         private static float targetFOV;
         private static float UpdateFOV;
@@ -21,14 +21,14 @@ namespace EnhancedDynamics
         // Camera bobbing parameters
         private static float bobbingSpeed = 5f;
         private static float convertedBobAm;
-        private static float bobbingAmount = Singleton<DefaultCategorySettings>.Instance.cameraBobbingIntensity;
+        private static float bobbingAmount = BasePlugin.CameraBobbingIntensity.Value;
         private static float sprintBobbingMultiplier = 1.5f;
         private static float timer = 0f;
         private static Vector3 lastBobOffset = Vector3.zero;
 
         //toggles
-        private static bool toggleFOV => Singleton<DefaultCategorySettings>.Instance.fovToggle;
-        private static bool toggleCameraBobbing => Singleton<DefaultCategorySettings>.Instance.cameraBobbingToggle;
+        private static bool toggleFOV => BasePlugin.FOVToggle.Value;
+        private static bool toggleCameraBobbing => BasePlugin.CameraBobbingToggle.Value;
 
         private static Vector3 CalculateBobOffset(float cameraYRotation)
         {

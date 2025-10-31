@@ -9,6 +9,9 @@
   </Target>
 
   <ItemGroup>
+    <Reference Include="MTM101BaldAPI">
+      <HintPath>../Managed/BBP Dependencies/MTM101BaldAPI.dll</HintPath>
+    </Reference>
     <Reference Include="0Harmony">
       <HintPath>../Managed/0Harmony.dll</HintPath>
     </Reference>
@@ -59,9 +62,6 @@
     </Reference>
     <Reference Include="MonoMod.Utils">
       <HintPath>../Managed/MonoMod.Utils.dll</HintPath>
-    </Reference>
-    <Reference Include="MTM101BaldAPI">
-      <HintPath>../Managed/BBP Dependencies/MTM101BaldAPI.dll</HintPath>
     </Reference>
     <Reference Include="NavMeshComponents">
       <HintPath>../Managed/NavMeshComponents.dll</HintPath>

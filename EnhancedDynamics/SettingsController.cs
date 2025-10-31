@@ -6,10 +6,10 @@ namespace EnhancedDynamics
 {
     public class DefaultCategorySettings : Singleton<DefaultCategorySettings>
     {
-        public bool fovToggle = false;
-        public int fovValue = 1;
-        public bool cameraBobbingToggle = false;
-        public int cameraBobbingIntensity = 2;
+        public bool fovToggle = BasePlugin.FOVToggle.Value;
+        public int fovValue = BasePlugin.FOVValue.Value;
+        public bool cameraBobbingToggle = BasePlugin.CameraBobbingToggle.Value;
+        public int cameraBobbingIntensity = BasePlugin.CameraBobbingIntensity.Value;
     }
 
     public class CategorySettings : CustomOptionsCategory
@@ -30,6 +30,7 @@ namespace EnhancedDynamics
 
             FOVToggle.Set(DefaultCategorySettings.Instance.fovToggle);
             FOVValue.Adjust(DefaultCategorySettings.Instance.fovValue);
+            
             CameraBobbing.Set(DefaultCategorySettings.Instance.cameraBobbingToggle);
             CameraBobbingIntensity.Adjust(DefaultCategorySettings.Instance.cameraBobbingIntensity);
         }
@@ -40,6 +41,11 @@ namespace EnhancedDynamics
             DefaultCategorySettings.Instance.fovValue = FOVValue.GetRaw();
             DefaultCategorySettings.Instance.cameraBobbingToggle = CameraBobbing.Value;
             DefaultCategorySettings.Instance.cameraBobbingIntensity = CameraBobbingIntensity.GetRaw();
+
+            BasePlugin.FOVToggle.Value = FOVToggle.Value;
+            BasePlugin.FOVValue.Value = FOVValue.GetRaw();
+            BasePlugin.CameraBobbingToggle.Value = CameraBobbing.Value;
+            BasePlugin.CameraBobbingIntensity.Value = CameraBobbingIntensity.GetRaw();
         }
 
         public AdjustmentBars CreateNewBar(string id, string name,string tooltipKey,int order, int length, Color textColor) {
