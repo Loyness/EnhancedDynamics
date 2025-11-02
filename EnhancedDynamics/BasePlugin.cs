@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace EnhancedDynamics
 {
-    [BepInPlugin("imloyness.enhanced.dynamics", "EnhancedDynamics", "31.10")]
+    [BepInPlugin("imloyness.enhanced.dynamics", "EnhancedDynamics", "02.11")]
     public class BasePlugin : BaseUnityPlugin
     {
         public static BepInEx.Logging.ManualLogSource logsblablabla = BepInEx.Logging.Logger.CreateLogSource("EnhancedDynamics");
@@ -18,6 +18,9 @@ namespace EnhancedDynamics
         public static ConfigEntry<int> FOVValue;
         public static ConfigEntry<bool> CameraBobbingToggle;
         public static ConfigEntry<int> CameraBobbingIntensity;
+
+        public static bool FrozenState_ED;
+        public static bool SlippingState_ED;
 
         private void Awake()
         {
@@ -40,7 +43,7 @@ namespace EnhancedDynamics
                 logsblablabla.LogInfo("Enhanced Dynamics | MTM101BaldAPI detected, adding OptionsAPI integration.");
                 MTMBald101APIIntegration.TryIntegrate();
             }
-            logsblablabla.LogInfo("Enhanced Dynamics | v31.10 | by imloyness | hi");
+            logsblablabla.LogInfo("Enhanced Dynamics | v02.11 | by imloyness | hi");
         }
     }
 }

@@ -3,6 +3,9 @@ using HarmonyLib;
 using EnhancedDynamics;
 //using MTM101BaldAPI.OptionsAPI;
 using Rewired;
+using System.Runtime.CompilerServices;
+using MTM101BaldAPI.Reflection;
+using JetBrains.Annotations;
 
 namespace EnhancedDynamics
 {
@@ -59,7 +62,7 @@ namespace EnhancedDynamics
 
             // FOV Transition Logic
             bool isRunning = Singleton<InputManager>.Instance.GetDigitalInput("Run", false);
-            float newTargetFOV = toggleFOV && isRunning ? convertedFOV * 1.2f : convertedFOV;
+            float newTargetFOV = toggleFOV && isRunning && __instance.Controllable && !BasePlugin.FrozenState_ED && !BasePlugin.SlippingState_ED ? convertedFOV * 1.2f : convertedFOV;
 
             if (transitionProgress >= 1f)
             {
@@ -73,7 +76,7 @@ namespace EnhancedDynamics
             }
 
             // Camera Bobbing Logic
-            if (toggleCameraBobbing)
+            if (toggleCameraBobbing && __instance.Controllable && !BasePlugin.FrozenState_ED && !BasePlugin.SlippingState_ED)
             {
                 // ReInput cooking
                 float moveX = ReInput.players.GetPlayer(0).GetAxis("MovementX");
@@ -94,7 +97,7 @@ namespace EnhancedDynamics
                     __instance.transform.position += lastBobOffset;
                 }
             }
-            
+
             //more fov logic
             if (transitionProgress < 1f)
             {
@@ -105,7 +108,7 @@ namespace EnhancedDynamics
 
             //debug
             //BasePlugin.logsblablabla.LogInfo("Enhanced Dynamics | Sprint Hold: " + Singleton<InputManager>.Instance.GetDigitalInput("Run", false).ToString());
-            
+
             //BasePlugin.logsblablabla.LogInfo("Enhanced Dynamics | FOV Toggle: " + toggleFOV.ToString());
             //BasePlugin.logsblablabla.LogInfo("Enhanced Dynamics | FOV: " + UpdateFOV.ToString());
 
