@@ -2,8 +2,6 @@
 using BepInEx.Configuration;
 using HarmonyLib;
 using BepInEx.Bootstrap;
-using System.Threading.Tasks;
-using System.Threading;
 using System.Collections;
 using UnityEngine;
 
@@ -21,6 +19,9 @@ namespace EnhancedDynamics
 
         public static bool FrozenState_ED;
         public static bool SlippingState_ED;
+        public static float Velocity_ED;
+        public static float Stamina_ED;
+        public static float MovementMultiplier_ED;
 
         private void Awake()
         {

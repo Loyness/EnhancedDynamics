@@ -1,11 +1,7 @@
 using UnityEngine;
 using HarmonyLib;
-using EnhancedDynamics;
-//using MTM101BaldAPI.OptionsAPI;
 using Rewired;
-using System.Runtime.CompilerServices;
-using MTM101BaldAPI.Reflection;
-using JetBrains.Annotations;
+using Unity.Mathematics;
 
 namespace EnhancedDynamics
 {
@@ -22,7 +18,7 @@ namespace EnhancedDynamics
         private static float lerpSpeed = 3f;
 
         // Camera bobbing parameters
-        private static float bobbingSpeed = 5f;
+        private static float bobbingSpeed;
         private static float convertedBobAm;
         private static float bobbingAmount = BasePlugin.CameraBobbingIntensity.Value;
         private static float sprintBobbingMultiplier = 1.5f;
@@ -62,7 +58,7 @@ namespace EnhancedDynamics
 
             // FOV Transition Logic
             bool isRunning = Singleton<InputManager>.Instance.GetDigitalInput("Run", false);
-            float newTargetFOV = toggleFOV && isRunning && __instance.Controllable && !BasePlugin.FrozenState_ED && !BasePlugin.SlippingState_ED ? convertedFOV * 1.2f : convertedFOV;
+            float newTargetFOV = toggleFOV && isRunning && __instance.Controllable && !BasePlugin.FrozenState_ED && !BasePlugin.SlippingState_ED && BasePlugin.Stamina_ED > 0 ? convertedFOV * 1.2f : convertedFOV;
 
             if (transitionProgress >= 1f)
             {
@@ -85,7 +81,8 @@ namespace EnhancedDynamics
 
                 if (isMoving)
                 {
-                    timer += Time.deltaTime * (isRunning ? sprintBobbingMultiplier : 1f);
+                    bobbingSpeed = 5f;
+                    timer += Time.deltaTime * (isRunning && BasePlugin.Stamina_ED > 0 ? sprintBobbingMultiplier : 1f);
                     float cameraYRotation = __instance.transform.eulerAngles.y;
                     Vector3 targetBobOffset = CalculateBobOffset(cameraYRotation);
                     lastBobOffset = Vector3.Lerp(lastBobOffset, targetBobOffset, Time.deltaTime * 10f);
@@ -115,6 +112,9 @@ namespace EnhancedDynamics
             //BasePlugin.logsblablabla.LogInfo("Enhanced Dynamics | Camera Bobbing Toggle: " + toggleCameraBobbing.ToString());
             //BasePlugin.logsblablabla.LogInfo("Enhanced Dynamics | Bobbing Amount: " + bobbingAmount.ToString());
 
+            //BasePlugin.logsblablabla.LogInfo("Enhanced Dynamics | Velocity: " + BasePlugin.Velocity_ED.ToString());
+            //BasePlugin.logsblablabla.LogInfo("Enhanced Dynamics | Bobbing Speed: " + bobbingSpeed.ToString());
+            //BasePlugin.logsblablabla.LogInfo("Enhanced Dynamics | Stamina: " + BasePlugin.Stamina_ED.ToString());
 
             __instance.camCom.fieldOfView = UpdateFOV;
             __instance.billboardCam.fieldOfView = UpdateFOV;

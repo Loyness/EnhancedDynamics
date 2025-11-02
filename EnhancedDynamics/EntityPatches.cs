@@ -1,6 +1,4 @@
 using HarmonyLib;
-using EnhancedDynamics;
-using UnityEngine;
 
 namespace EnhancedDynamics
 {

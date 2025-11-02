@@ -1,6 +1,4 @@
 using HarmonyLib;
-using EnhancedDynamics;
-using MTM101BaldAPI.Reflection;
 
 namespace EnhancedDynamics
 {
