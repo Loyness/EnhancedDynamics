@@ -1,33 +1,62 @@
-﻿using System.Collections;
-using UnityEngine;
-using BepInEx;
+﻿using BepInEx;
+using BepInEx.Configuration;
 using HarmonyLib;
-using UnityEngine.SceneManagement;
-using MTM101BaldAPI.OptionsAPI;
+using BepInEx.Bootstrap;
+using System.Collections;
+using UnityEngine;
 
 namespace EnhancedDynamics
 {
-    [BepInPlugin("imloyness.enhanced.dynamics", "EnhancedDynamics", "30.10")]
+    [BepInPlugin("imloyness.enhanced.dynamics", "EnhancedDynamics", "16.11")]
     public class BasePlugin : BaseUnityPlugin
     {
         public static BepInEx.Logging.ManualLogSource logsblablabla = BepInEx.Logging.Logger.CreateLogSource("EnhancedDynamics");
 
+        public static ConfigEntry<bool> FOVToggle;
+        public static ConfigEntry<int> FOVValue;
+        public static ConfigEntry<bool> CameraBobbingToggle;
+        public static ConfigEntry<int> CameraBobbingIntensity;
+        public static ConfigEntry<bool> idleinhaleToggle;
+
+        public static bool FrozenState_ED;
+        public static bool SlippingState_ED;
+        public static float Velocity_ED;
+        public static float Stamina_ED;
+
         private void Awake()
         {
-            var singletonThing = new GameObject("randomSingleton");
-            singletonThing.AddComponent<DefaultCategorySettings>();
-            DontDestroyOnLoad(singletonThing);
-            new Harmony("imloyness.enhanced.dynamics").PatchAll();
-
-            CustomOptionsCore.OnMenuInitialize += AddCategory;
-
-            logsblablabla.LogInfo("Enhanced Dynamics | v30.10 | by imloyness | hi");
+            // configs
+            FOVToggle = Config.Bind("Camera", "FOV Toggle", true, "Enable/Disable FOV changes");
+            FOVValue = Config.Bind("Camera", "FOV Value", 1, "Set the FOV multiplier (1 = 30 FOV, 2 = 60 FOV, 3 = 90 FOV, 4 = 120 FOV)");
+            CameraBobbingToggle = Config.Bind("Camera", "Camera Bobbing Toggle", true, "Enable/Disable Camera Bobbing");
+            CameraBobbingIntensity = Config.Bind("Camera", "Camera Bobbing Intensity", 1, "Set the Camera Bobbing Intensity");
+            idleinhaleToggle = Config.Bind("Camera", "Idle Inhale Toggle", true, "Enable/Disable Idle Inhale Animation (Requires Camera Bobbing to be enabled.)");
         }
-        
-        void AddCategory(OptionsMenu __instance, CustomOptionsHandler handler)
+
+        private IEnumerator Start()
         {
-            if (Singleton<CoreGameManager>.Instance != null) return;
-            handler.AddCategory<CategorySettings>("Enhanced\nDynamics");
+            yield return null;
+            yield return new WaitForSeconds(0.3f);
+
+            var harmony = new Harmony("imloyness.enhanced.dynamics");
+
+            try
+            {
+                harmony.PatchAll();
+            }
+            catch (System.Exception e)
+            {
+                logsblablabla.LogWarning("Enhanced Dynamics | Harmony patching failed: " + e.Message + ". Skipping patches.");
+                harmony.PatchAll(typeof(CameraPatches));
+            }
+
+            if (Chainloader.PluginInfos.ContainsKey("mtm101.rulerp.bbplus.baldidevapi"))
+            {
+                logsblablabla.LogInfo("Enhanced Dynamics | MTM101BaldAPI detected, adding OptionsAPI integration.");
+                MTMBald101APIIntegration.TryIntegrate();
+            }
+
+            logsblablabla.LogInfo("Enhanced Dynamics | v02.11 | by imloyness | Loaded.");
         }
     }
 }
