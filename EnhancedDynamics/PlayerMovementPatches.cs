@@ -9,7 +9,7 @@ namespace EnhancedDynamics
         [HarmonyPostfix]
         public static void PostfixPlayerMovementUpdate(PlayerMovement __instance)
         {
-            BasePlugin.Velocity_ED = AccessTools.FieldRefAccess<PlayerMovement, float>(__instance, "realVelocity");
+            BasePlugin.Velocity_ED = AccessTools.FieldRefAccess<PlayerMovement, float>(__instance, "frameVelocity") * 10f;
             BasePlugin.Stamina_ED = __instance.stamina;
         }
     }

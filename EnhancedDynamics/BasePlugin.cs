@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace EnhancedDynamics
 {
-    [BepInPlugin("imloyness.enhanced.dynamics", "EnhancedDynamics", "02.11")]
+    [BepInPlugin("imloyness.enhanced.dynamics", "EnhancedDynamics", "16.11")]
     public class BasePlugin : BaseUnityPlugin
     {
         public static BepInEx.Logging.ManualLogSource logsblablabla = BepInEx.Logging.Logger.CreateLogSource("EnhancedDynamics");
@@ -16,12 +16,12 @@ namespace EnhancedDynamics
         public static ConfigEntry<int> FOVValue;
         public static ConfigEntry<bool> CameraBobbingToggle;
         public static ConfigEntry<int> CameraBobbingIntensity;
+        public static ConfigEntry<bool> idleinhaleToggle;
 
         public static bool FrozenState_ED;
         public static bool SlippingState_ED;
         public static float Velocity_ED;
         public static float Stamina_ED;
-        public static float MovementMultiplier_ED;
 
         private void Awake()
         {
@@ -30,6 +30,7 @@ namespace EnhancedDynamics
             FOVValue = Config.Bind("Camera", "FOV Value", 1, "Set the FOV multiplier (1 = 30 FOV, 2 = 60 FOV, 3 = 90 FOV, 4 = 120 FOV)");
             CameraBobbingToggle = Config.Bind("Camera", "Camera Bobbing Toggle", true, "Enable/Disable Camera Bobbing");
             CameraBobbingIntensity = Config.Bind("Camera", "Camera Bobbing Intensity", 1, "Set the Camera Bobbing Intensity");
+            idleinhaleToggle = Config.Bind("Camera", "Idle Inhale Toggle", true, "Enable/Disable Idle Inhale Animation (Requires Camera Bobbing to be enabled.)");
         }
 
         private IEnumerator Start()
@@ -37,14 +38,25 @@ namespace EnhancedDynamics
             yield return null;
             yield return new WaitForSeconds(0.3f);
 
-            new Harmony("imloyness.enhanced.dynamics").PatchAll();
+            var harmony = new Harmony("imloyness.enhanced.dynamics");
+
+            try
+            {
+                harmony.PatchAll();
+            }
+            catch (System.Exception e)
+            {
+                logsblablabla.LogWarning("Enhanced Dynamics | Harmony patching failed: " + e.Message + ". Skipping patches.");
+                harmony.PatchAll(typeof(CameraPatches));
+            }
 
             if (Chainloader.PluginInfos.ContainsKey("mtm101.rulerp.bbplus.baldidevapi"))
             {
                 logsblablabla.LogInfo("Enhanced Dynamics | MTM101BaldAPI detected, adding OptionsAPI integration.");
                 MTMBald101APIIntegration.TryIntegrate();
             }
-            logsblablabla.LogInfo("Enhanced Dynamics | v02.11 | by imloyness | hi");
+
+            logsblablabla.LogInfo("Enhanced Dynamics | v02.11 | by imloyness | Loaded.");
         }
     }
 }
