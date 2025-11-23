@@ -69,14 +69,6 @@ namespace EnhancedDynamics
             bool slipping = BasePlugin.SlippingState_ED;
             bool hasStamina = BasePlugin.Stamina_ED > 0;
 
-            // Early exit if nothing to do
-            if (!controllable || frozen || slipping)
-            {
-                ResetOffsets(dt);
-                currentFOV = ApplyFOV(currentFOV);
-                return;
-            }
-
             // fov setup
             convertedFOV = (baseFOV + 1) * 30f;
             convertedBobAm = (bobbingAmount + 1) * 0.25f;
