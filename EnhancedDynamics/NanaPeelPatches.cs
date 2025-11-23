@@ -1,4 +1,5 @@
 using HarmonyLib;
+using BepInEx;
 
 namespace EnhancedDynamics
 {
@@ -9,7 +10,7 @@ namespace EnhancedDynamics
         [HarmonyPostfix]
         public static void PostfixNanaPeelUpdate(ITM_NanaPeel __instance)
         {
-            BasePlugin.SlippingState_ED = AccessTools.FieldRefAccess<ITM_NanaPeel, bool>(__instance, "slipping");
+            BasePlugin.SlippingState_ED = __instance.slipping;
         }
     }
 }
