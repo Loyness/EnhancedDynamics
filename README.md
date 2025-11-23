@@ -12,7 +12,7 @@ A mod for Baldi's Basics Plus that enhances the game's dynamic, making the gamep
 
 ## Installation
 
-1. Make sure you have [BepInEx](https://github.com/BepInEx/BepInEx) and [MTM101BaldAPI](https://gamebanana.com/mods/383711) installed in your Baldi's Basics Plus game
+1. Make sure you have [BepInEx](https://github.com/BepInEx/BepInEx) and [MTM101BaldAPI](https://gamebanana.com/mods/383711) (Optional to enable settings tab in game) installed in your Baldi's Basics Plus game
 2. Download the latest release of Enhanced Dynamics
 3. Place the `EnhancedDynamics.dll` file in your `BepInEx/plugins` folder
 
@@ -31,7 +31,7 @@ You can toggle and configure it from 0.25 by default to 1 max
 
 - Baldi's Basics Plus
 - BepInEx
-- MTM101BaldAPI
+- MTM101BaldAPI (Optional)
 
 ## Bug Reports and Feedback
 
