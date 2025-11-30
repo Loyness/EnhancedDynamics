@@ -7,7 +7,8 @@ using UnityEngine;
 
 namespace EnhancedDynamics
 {
-    [BepInPlugin("imloyness.enhanced.dynamics", "EnhancedDynamics", "26.11")]
+    // do not forget to change version here
+    [BepInPlugin("imloyness.enhanced.dynamics", "EnhancedDynamics", "1.01")]
     public class BasePlugin : BaseUnityPlugin
     {
         public static BepInEx.Logging.ManualLogSource logsblablabla = BepInEx.Logging.Logger.CreateLogSource("EnhancedDynamics");
@@ -56,7 +57,7 @@ namespace EnhancedDynamics
                 MTMBald101APIIntegration.TryIntegrate();
             }
 
-            logsblablabla.LogInfo("Enhanced Dynamics | v02.11 | by imloyness | Loaded.");
+            logsblablabla.LogInfo("Enhanced Dynamics | v1.01 | by imloyness | Loaded.");
         }
     }
 }
