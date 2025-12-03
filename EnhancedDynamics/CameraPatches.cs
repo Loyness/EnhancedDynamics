@@ -10,11 +10,11 @@ namespace EnhancedDynamics
         // FOV parameters
         public static float baseFOV => BasePlugin.FOVValue.Value;
         public static float convertedFOV;
-        public static float targetFOV;
         public static float UpdateFOV;
-        public static float transitionProgress = 1f;
+        public static float transitionProgress = 0f;
+        public static float currentTargetFOV;
         public static float startFOV;
-        private static float lerpSpeed = 3f;
+        private static float defaultLerpSpeed = 3f;
 
         // Camera bobbing parameters
         public static float bobbingSpeed = 5f;
@@ -51,15 +51,27 @@ namespace EnhancedDynamics
         
         public static float CalculateIdleInhale()
         {
-            // Continuous sine wave for proper breathing animation
             return Mathf.Sin(idleInhaleTimer * idleInhaleSpeed) * (convertedBobAm * 0.2f);
         }
 
-        [HarmonyPatch(typeof(GameCamera), "Awake")]
-        [HarmonyPostfix]
-        public static void PostfixAwake(GameCamera __instance)
+        public static void SetFOV(Camera cameraToChange, Camera billboardCamera, float TargetFOV, float LerpSpeed)
         {
-            __instance.camCom.fieldOfView = 60f; // default
+            if (currentTargetFOV != TargetFOV)
+            {
+                currentTargetFOV = TargetFOV;
+                transitionProgress = 0f;
+                startFOV = UpdateFOV;
+            }
+
+            if (transitionProgress < 1f && !Mathf.Approximately(UpdateFOV, TargetFOV))
+            {
+                transitionProgress = Mathf.Min(transitionProgress + LerpSpeed * Time.deltaTime, 1f);
+                float smoothProgress = Mathf.Sin(transitionProgress * Mathf.PI * 0.5f);
+                UpdateFOV = Mathf.Lerp(startFOV, TargetFOV, smoothProgress);
+            }
+
+            cameraToChange.fieldOfView = UpdateFOV;
+            billboardCamera.fieldOfView = UpdateFOV;
         }
 
         [HarmonyPatch(typeof(GameCamera), "LateUpdate")]
@@ -69,19 +81,23 @@ namespace EnhancedDynamics
             convertedFOV = (baseFOV + 1) * 30f;
             convertedBobAm = (bobbingAmount + 1) * 0.25f;
 
+            // so camera in elevator doesn't freak out and being 0
+            if (UpdateFOV == 0f)
+            {
+                UpdateFOV = convertedFOV;
+                startFOV = convertedFOV;
+                currentTargetFOV = convertedFOV;
+            }
+
             // FOV Transition Logic
             bool isRunning = Singleton<InputManager>.Instance.GetDigitalInput("Run", false);
-            float newTargetFOV = toggleFOV && isRunning && __instance.Controllable && !BasePlugin.FrozenState_ED && !BasePlugin.SlippingState_ED && BasePlugin.Stamina_ED > 0 ? convertedFOV * 1.2f : convertedFOV;
-
-            if (transitionProgress >= 1f)
+            if (toggleFOV && isRunning && __instance.Controllable && !BasePlugin.FrozenState_ED && !BasePlugin.SlippingState_ED && BasePlugin.Stamina_ED > 0)
             {
-                // Check if we need to start a new transition
-                if (Mathf.Abs(targetFOV - newTargetFOV) > 0.01f)
-                {
-                    startFOV = __instance.camCom.fieldOfView;
-                    targetFOV = newTargetFOV;
-                    transitionProgress = 0f;
-                }
+                SetFOV(__instance.camCom, __instance.billboardCam, convertedFOV * 1.2f, defaultLerpSpeed);
+            }
+            else
+            {
+                SetFOV(__instance.camCom, __instance.billboardCam, convertedFOV, defaultLerpSpeed);
             }
 
             // Camera Bobbing Logic
@@ -125,22 +141,10 @@ namespace EnhancedDynamics
             }
             else
             {
-                // Reset all offsets if bobbing disabled or uncontrollable
                 lastBobOffset = Vector3.Lerp(lastBobOffset, Vector3.zero, Time.deltaTime * 5f);
                 lastIdleOffset = Mathf.Lerp(lastIdleOffset, 0f, Time.deltaTime * 5f);
                 __instance.transform.position += lastBobOffset + new Vector3(0f, lastIdleOffset, 0f);
             }
-
-            //more fov logic
-            if (transitionProgress < 1f)
-            {
-                transitionProgress = Mathf.Min(transitionProgress + lerpSpeed * Time.deltaTime, 1f);
-                float smoothProgress = Mathf.Sin(transitionProgress * Mathf.PI * 0.5f);
-                UpdateFOV = Mathf.Lerp(startFOV, targetFOV, smoothProgress);
-            }
-
-            __instance.camCom.fieldOfView = UpdateFOV;
-            __instance.billboardCam.fieldOfView = UpdateFOV;
         }
     }
 }

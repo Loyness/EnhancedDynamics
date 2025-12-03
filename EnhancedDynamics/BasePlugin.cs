@@ -7,17 +7,23 @@ using UnityEngine;
 
 namespace EnhancedDynamics
 {
-    [BepInPlugin("imloyness.enhanced.dynamics", "EnhancedDynamics", "26.11")]
+    // do not forget to change version here
+    [BepInPlugin("imloyness.enhanced.dynamics", "EnhancedDynamics", "1.01")]
     public class BasePlugin : BaseUnityPlugin
     {
         public static BepInEx.Logging.ManualLogSource logsblablabla = BepInEx.Logging.Logger.CreateLogSource("EnhancedDynamics");
 
-        public static ConfigEntry<bool> FOVToggle;
+        //configs
         public static ConfigEntry<int> FOVValue;
-        public static ConfigEntry<bool> CameraBobbingToggle;
         public static ConfigEntry<int> CameraBobbingIntensity;
-        public static ConfigEntry<bool> idleinhaleToggle;
 
+        public static ConfigEntry<bool> FOVToggle;
+        public static ConfigEntry<bool> CameraBobbingToggle;
+        public static ConfigEntry<bool> idleinhaleToggle;
+        public static ConfigEntry<bool> VerticalCameraToggle;
+
+        
+        //shared variables
         public static bool FrozenState_ED;
         public static bool SlippingState_ED;
         public static float Velocity_ED;
@@ -25,12 +31,14 @@ namespace EnhancedDynamics
 
         private void Awake()
         {
-            // configs
-            FOVToggle = Config.Bind("Camera", "FOV Toggle", true, "Enable/Disable FOV changes");
+            // config setup
             FOVValue = Config.Bind("Camera", "FOV Value", 1, "Set the FOV multiplier (1 = 30 FOV, 2 = 60 FOV, 3 = 90 FOV, 4 = 120 FOV)");
+            CameraBobbingIntensity = Config.Bind("Camera", "Camera Bobbing Intensity", 2, "Set the Camera Bobbing Intensity");
+
+            FOVToggle = Config.Bind("Camera", "FOV Toggle", true, "Enable/Disable FOV changes");
             CameraBobbingToggle = Config.Bind("Camera", "Camera Bobbing Toggle", true, "Enable/Disable Camera Bobbing");
-            CameraBobbingIntensity = Config.Bind("Camera", "Camera Bobbing Intensity", 1, "Set the Camera Bobbing Intensity");
             idleinhaleToggle = Config.Bind("Camera", "Idle Inhale Toggle", true, "Enable/Disable Idle Inhale Animation (Requires Camera Bobbing to be enabled.)");
+            VerticalCameraToggle = Config.Bind("Camera", "Vertical Camera Toggle", true, "Enable/Disable Vertical Camera");
         }
 
         private IEnumerator Start()
@@ -56,7 +64,7 @@ namespace EnhancedDynamics
                 MTMBald101APIIntegration.TryIntegrate();
             }
 
-            logsblablabla.LogInfo("Enhanced Dynamics | v02.11 | by imloyness | Loaded.");
+            logsblablabla.LogInfo("Enhanced Dynamics | v1.01 | by imloyness | Loaded.");
         }
     }
 }
