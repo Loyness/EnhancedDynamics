@@ -145,8 +145,6 @@ namespace EnhancedDynamics
                 lastIdleOffset = Mathf.Lerp(lastIdleOffset, 0f, Time.deltaTime * 5f);
                 __instance.transform.position += lastBobOffset + new Vector3(0f, lastIdleOffset, 0f);
             }
-
-            BasePlugin.logsblablabla.LogInfo("Enhanced Dynamics | FOV: " + __instance.camCom.fieldOfView.ToString());
         }
     }
 }

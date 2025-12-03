@@ -1,4 +1,5 @@
 using HarmonyLib;
+using UnityEngine;
 
 namespace EnhancedDynamics
 {
@@ -12,5 +13,6 @@ namespace EnhancedDynamics
             BasePlugin.Velocity_ED = __instance.frameVelocity * 10f;
             BasePlugin.Stamina_ED = __instance.stamina;
         }
+
     }
 }
